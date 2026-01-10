@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Estimate {
+  id                 String   @id @default(uuid())
+  customerName       String
+  agentName          String
+  address            String
+  projectDescription String   @db.Text
+  date               DateTime @default(now())
+  products           Json     // Array of product objects
+  discounts          Json     // Array of discount objects
+  installationCost   Float    @default(0)
+  smallOrderShipping Float    @default(0)
+  subtotalProducts   Float
+  totalPrice         Float
+  taxExempt          Boolean  @default(false)
+  taxRateLow         Float    @default(0)
+  taxRateHigh        Float    @default(0)
+  taxSource          String?  // 'manual' or 'zip'
+  zipCode            String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Goal {
+  id        String      @id // e.g. 'reviews', 'meetings'
+  name      String
+  target    Float
+  type      String      // 'link', 'meeting', 'business', 'volume', 'sale', 'partner', 'congrats'
+  category  String      // 'sales' or 'marketing'
+  isCurrency Boolean    @default(false)
+  entries   GoalEntry[]
+}
+
+model GoalEntry {
+  id        Int      @id @default(autoincrement())
+  month     String   // e.g. "January 2026"
+  date      String   // formatted date string from original app
+  goalId    String
+  goal      Goal     @relation(fields: [goalId], references: [id])
+  entryData Json     // Dynamic data fields
+  createdAt DateTime @default(now())
+}
+
+model GlobalSetting {
+  id               Int     @id @default(1)
+  companyName      String  @default("Green Mainland Luxury Windows and Doors")
+  documentTitle    String  @default("Cost Estimate")
+  disclaimerText   String  @default("This estimate does not include installation and is not an official quote.") @db.Text
+  roundingOption   String  @default("none")
+  invertText       Boolean @default(false)
+  bgImageOpacity   Float   @default(0.1)
+  enableConversion Boolean @default(false)
+  conversionTargetUnit String @default("mm")
+  smartLockBaseCost Float @default(1100)
+  retractableScreenBaseRate Float @default(12)
+  glassTextureAddonCost Float @default(150)
+}
