@@ -66,3 +66,25 @@ model GlobalSetting {
   retractableScreenBaseRate Float @default(12)
   glassTextureAddonCost Float @default(150)
 }
+
+model Quote {
+  id                 String   @id @default(uuid())
+  quoteNumber        String
+  logo               String?  @db.Text // Base64 logo
+  clientName         String
+  clientNumber       String?
+  clientEmail        String?
+  clientAddress      String?
+  clientSignatureName String?
+  clientSignatureTitle String?
+  gmName             String   @default("James Rivers")
+  gmTitle            String   @default("Sales Representative")
+  products           Json     // Array of product objects
+  pricing            Json     // Pricing configuration
+  discounts          Json     // Array of custom discounts
+  automatedDiscounts Json     // Automated discount settings
+  additionalTerms    Json     // Array of additional terms
+  totals             Json     // Calculation totals
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

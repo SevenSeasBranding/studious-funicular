@@ -84,6 +84,7 @@ const GoalsContainer: React.FC<GoalsContainerProps> = ({ onBack }) => {
                   count = currentData;
                 }
 
+                const isCurrency = 'isCurrency' in config ? config.isCurrency : false;
                 const progress = Math.min(100, (count / config.target) * 100);
                 
                 return (
@@ -96,8 +97,8 @@ const GoalsContainer: React.FC<GoalsContainerProps> = ({ onBack }) => {
                     </button>
                     <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">{config.name}</h4>
                     <div className="text-2xl font-black text-gray-900 mb-4">
-                      {config.isCurrency ? `$${count.toLocaleString()}` : count}
-                      <span className="text-sm text-gray-400 font-bold ml-2">/ {config.isCurrency ? `$${config.target.toLocaleString()}` : config.target}</span>
+                      {isCurrency ? `$${count.toLocaleString()}` : count}
+                      <span className="text-sm text-gray-400 font-bold ml-2">/ {isCurrency ? `$${config.target.toLocaleString()}` : config.target}</span>
                     </div>
                     
                     <div className="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">

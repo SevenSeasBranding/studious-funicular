@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Dashboard from '@/components/dashboard/Dashboard';
 import CalculatorContainer from '@/components/calculator/CalculatorContainer';
 import GoalsContainer from '@/components/goals/GoalsContainer';
+import QuoteGeneratorContainer from '@/components/quote-generator/QuoteGeneratorContainer';
 import { GlobalSettings } from '@/lib/types';
 import { INITIAL_MATERIALS, INITIAL_PRODUCT_TYPES } from '@/lib/constants';
 
@@ -56,7 +57,7 @@ const INITIAL_SETTINGS: GlobalSettings = {
 };
 
 export default function Home() {
-  const [view, setView] = useState<'dashboard' | 'calculator' | 'goals'>('dashboard');
+  const [view, setView] = useState<'dashboard' | 'calculator' | 'goals' | 'quote-generator'>('dashboard');
   const [settings, setSettings] = useState<GlobalSettings>(INITIAL_SETTINGS);
 
   useEffect(() => {
@@ -90,6 +91,10 @@ export default function Home() {
       
       {view === 'goals' && (
         <GoalsContainer onBack={() => setView('dashboard')} />
+      )}
+
+      {view === 'quote-generator' && (
+        <QuoteGeneratorContainer onBack={() => setView('dashboard')} />
       )}
     </main>
   );

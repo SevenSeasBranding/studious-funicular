@@ -154,3 +154,77 @@ export interface MonthData {
   sales: Record<string, any>;
   marketing: Record<string, any>;
 }
+
+// Quote Generator Types
+export interface QuoteProduct {
+  series: string;
+  description: string;
+  quantity: number;
+  price: number;
+  visualExample: string; // Base64
+  additionalImages: string[]; // Array of Base64
+  frameW: string;
+  frameH: string;
+  frameD: string;
+  layoutMode: 'standard' | 'split' | 'full' | 'list';
+  isTaxable: boolean;
+  originalIndex?: number;
+}
+
+export interface QuoteDiscount {
+  id: number;
+  name: string;
+  valueType: 'percentage' | 'flat';
+  amount: number;
+  calculatedAmount: number;
+}
+
+export interface QuotePricing {
+  installation: 'Yes' | 'No';
+  installationPrice: number;
+  installationIncluded: string;
+  installationIsTaxable: boolean;
+  texasSalesTax: 'Yes' | 'No';
+  taxZipCode: string;
+  taxRate: number;
+}
+
+export interface QuoteState {
+  id?: string;
+  logo: string;
+  quoteNumber: string;
+  client: {
+    name: string;
+    number: string;
+    email: string;
+    address: string;
+    signatureName: string;
+    signatureTitle: string;
+  };
+  greenMainland: {
+    name: string;
+    title: string;
+  };
+  products: QuoteProduct[];
+  pricing: QuotePricing;
+  discounts: QuoteDiscount[];
+  automatedDiscounts: {
+    contractor: boolean;
+    bulk: boolean;
+    partner: boolean;
+  };
+  additionalTerms: {
+    id: number;
+    title: string;
+    content: string;
+  }[];
+  totals: {
+    productTotal: number;
+    subtotal: number;
+    tax: number;
+    grandTotal: number;
+    contractorDiscountCalculated?: { name: string; amount: number } | null;
+    bulkDiscountCalculated?: { name: string; amount: number } | null;
+    partnerDiscountCalculated?: { name: string; amount: number } | null;
+  };
+}
