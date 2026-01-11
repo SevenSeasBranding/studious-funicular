@@ -137,7 +137,8 @@ export interface GoalEntry {
   month: string;
   date: string;
   goalId: string;
-  entryData: any;
+  entryData: Record<string, unknown>;
+  createdAt?: string;
 }
 
 export interface GoalConfig {
@@ -151,8 +152,8 @@ export interface GoalConfig {
 export interface MonthData {
   month: string;
   timestamp: number;
-  sales: Record<string, any>;
-  marketing: Record<string, any>;
+  sales: Record<string, unknown>;
+  marketing: Record<string, unknown>;
 }
 
 // Quote Generator Types
